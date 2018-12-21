@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <title></title>
+
+
+</head>
+<body style="height: 100%;margin: 0" onload="sendRequest('http://ccod4.0t:8082/dcms')">
+<!--<iframe id="redir" width="100%" height="100%" ></iframe>-->
+<script>
+    //截取相对路径
+    function GetUrlRelativePath()
+    {
+        var url = window.location.href;
+        var arrUrl = url.split("//");
+        var start = arrUrl[1].indexOf("/");
+        var relUrl = arrUrl[1].substring(start);//stop省略，截取从start开始到结尾的所有字符
+
+        return relUrl;
+    }
+    alert("http://ccod4.0t:8082"+GetUrlRelativePath());
+//    alert(document.getElementByName("redir")[0].src);
+//    document.getElementById("redir")[0].src="http://ccod4.0t:8082/dcms";
+
+//    redir.src = "http://ccod4.0t:8082/dcms";
+
+    function createXMLHttpRequest(){
+        if(window.XMLHttpRequest){
+            XMLHttpR = new XMLHttpRequest();
+        }else if(window.ActiveXObject){
+            try{
+                XMLHttpR = new ActiveXObject("Msxml2.XMLHTTP");
+            }catch(e){
+                try{
+                    XMLHttpR = new ActiveXObject("Microsoft.XMLHTTP");
+                }catch(e){
+                }
+            }
+        }
+    }
+    function sendRequest(url){
+        createXMLHttpRequest();
+        alert(XMLHttpR);
+        XMLHttpR.open("GET",url,true);
+        XMLHttpR.setRequestHeader("Content-Type","text/html;charset=utf-8");
+        XMLHttpR.onreadystatechange = processResponse;
+        XMLHttpR.send(null);
+    }
+    function processResponse(){
+        if(XMLHttpR.readyState ==4 && XMLHttpR.status == 200){
+            document.write(XMLHttpR.responseText);
+        }
+    }
+</script>
+</body>
+</html>
